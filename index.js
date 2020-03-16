@@ -1,6 +1,5 @@
 async function passwordSubmitted(e) {
     plainPassword = document.querySelector('#password-input').value;
-    console.log(plainPassword);
     const SHA1 = new Hashes.SHA1;
 
     let hash = SHA1.hex(plainPassword);
@@ -10,7 +9,8 @@ async function passwordSubmitted(e) {
         headers: {'Add-Padding': true}
     });
     const result = await response.text();
-    // matches a specific hash with a colon and a number after it, e.g 1F2A4539009876542ACDDC4F:132
+    // matches a specific hash with a colon and a number after it,
+    // e.g 1F2A4539009876542ACDDC4F:132 and puts the number into capture group 1.
     const exp = new RegExp(`${hash.slice(5)}:(\\d+)`, 'i');
     const reResults = result.match(exp);
     let amount = 0;
